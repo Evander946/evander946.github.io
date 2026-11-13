@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evander Rajaprakash Portfolio</title>
+<meta name="description" content="Evander Rajaprakash, Data Engineer. AWS lakehouses, PySpark, SQL and legacy ETL migration for banking, automotive and digital marketing.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23131c2b'/%3E%3Crect x='5' y='8' width='22' height='4' fill='%23a35f27'/%3E%3Crect x='5' y='14' width='22' height='4' fill='%23a3afbd'/%3E%3Crect x='5' y='20' width='22' height='4' fill='%23e0b93f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -69,7 +71,7 @@ h3{font-size:1.35rem;font-weight:650;letter-spacing:-.01em;line-height:1.2}
 .btn.solid:hover{background:var(--gold);border-color:var(--gold);color:var(--paper)}
 
 /* pipeline */
-.pipe{margin-top:56px;display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--rule);background:var(--panel);border-radius:4px;overflow:hidden}
+.pipe{margin-top:0;display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--rule);background:var(--panel);border-radius:0 0 4px 4px;overflow:hidden}
 .stage{padding:18px 18px 20px;border-left:1px solid var(--rule);border-top:5px solid var(--rule);position:relative;min-width:0}
 .stage:first-child{border-left:0}
 .stage.b{border-top-color:var(--bronze)}
@@ -79,10 +81,8 @@ h3{font-size:1.35rem;font-weight:650;letter-spacing:-.01em;line-height:1.2}
 .stage.b .mono{color:var(--bronze)}.stage.s .mono{color:var(--silver)}.stage.g .mono{color:var(--gold)}
 .stage b{font-family:var(--display);font-size:1.15rem;font-weight:650;display:block;margin-bottom:8px;line-height:1.2}
 .stage p{font-size:.88rem;line-height:1.45;color:var(--muted)}
-.flow{height:3px;margin-top:0;background:var(--rule);position:relative;overflow:hidden;border-radius:2px}
-.flow::after{content:"";position:absolute;top:0;left:0;height:100%;width:18%;background:linear-gradient(90deg,var(--bronze),var(--silver),var(--gold));animation:run 4.5s linear infinite}
-@keyframes run{from{transform:translateX(-100%)}to{transform:translateX(560%)}}
-@media (prefers-reduced-motion:reduce){.flow::after{animation:none;width:100%}html{scroll-behavior:auto}}
+.flowc{display:block;width:100%;height:130px;margin-top:56px;background:var(--panel);border:1px solid var(--rule);border-bottom:0;border-radius:4px 4px 0 0}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .pipecap{margin-top:10px}
 
 /* facts */
@@ -109,7 +109,9 @@ section{padding:72px 0 0}
 .card{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:26px;display:flex;flex-direction:column;gap:12px}
 .card.lead{grid-column:1/-1;border-left:5px solid var(--gold)}
 .card p{color:var(--muted);font-size:.98rem;max-width:70ch}
-.lineage{font-family:var(--mono);font-size:.8rem;line-height:1.7;color:var(--ink);background:var(--paper);border-radius:3px;padding:10px 12px;overflow-x:auto;white-space:nowrap}
+.lineage{display:flex;flex-wrap:wrap;align-items:center;gap:6px;counter-reset:step;font-family:var(--mono);font-size:.76rem;line-height:1.4}
+.lineage span{counter-increment:step;border:1px solid var(--rule);border-radius:3px;padding:4px 9px;background:var(--paper)}
+.lineage span::before{content:counter(step);color:var(--gold);font-weight:500;margin-right:7px}
 .lineage i{font-style:normal;color:var(--muted)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin-top:auto}
 .tags li{font-family:var(--mono);font-size:.72rem;padding:3px 8px;border:1px solid var(--rule);border-radius:999px;color:var(--muted)}
@@ -182,6 +184,7 @@ footer .mono{color:var(--paper);opacity:.6}
         <li><a href="#work">Work</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#writing">Writing</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -199,6 +202,7 @@ footer .mono{color:var(--paper);opacity:.6}
       <a class="btn" href="#work">See my work</a>
     </div>
 
+    <canvas id="flow" class="flowc" aria-hidden="true"></canvas>
     <div class="pipe" role="img" aria-label="How I build a pipeline: sources, bronze, silver, gold, serving">
       <div class="stage">
         <span class="mono">00 · Sources</span>
@@ -226,8 +230,7 @@ footer .mono{color:var(--paper);opacity:.6}
         <p>Athena and Redshift for analytics. DB2, SQL Server and MySQL downstream. Airflow keeps it running.</p>
       </div>
     </div>
-    <div class="flow" aria-hidden="true"></div>
-    <p class="mono pipecap">The shape of most things I build: a medallion lakehouse, raw to refined to served</p>
+        <p class="mono pipecap">Each dot is a record. Duplicates drop out at Silver, and what is left lines up for Gold.</p>
 
     <div class="facts">
       <div class="fact"><strong>5+</strong><span>years in production data work</span></div>
@@ -242,14 +245,15 @@ footer .mono{color:var(--paper);opacity:.6}
       <div class="head"><h2>About</h2><span class="mono">Who I am</span></div>
       <div class="about">
         <div>
-          <p>I started as a SQL developer tuning slow queries and stored procedures, and I've stayed close to the data ever since. Over five years I've moved from writing reports to owning whole pipelines: reading the requirement, drawing the design, building it, testing it, taking it through UAT, releasing it and fixing it when something breaks at 2 a.m.</p>
-          <p>Most of my work has been modernisation. I've rewritten Ab Initio ETL graphs in PySpark, designed a Bronze/Silver/Gold lakehouse from scratch for a marketing platform, and I'm now re-engineering a Java middleware layer into Glue, PySpark, Athena and Iceberg for a bank.</p>
-          <p>I work comfortably in regulated environments where access control, encryption, schema management and data quality are not optional, and I like sitting with client architects and business teams until a vague requirement becomes a design someone can build.</p>
+          <p>I build data pipelines that turn raw, messy source data into reliable, analytics-ready datasets, at scale and on AWS. I've worked across the whole pipeline lifecycle: ingestion, transformation, data quality, orchestration and delivery to analytics and downstream systems.</p>
+          <p>I started out in SQL development, writing stored procedures and tuning slow queries. Since then most of my work has been modernisation: migrating Ab Initio ETL graphs to PySpark, building a Bronze/Silver/Gold lakehouse for a marketing platform, and now re-engineering a Java middleware layer into Glue, PySpark, Athena and Iceberg for a bank.</p>
+          <p>I care about pipelines that are correct first, then fast and cost-efficient. Incremental loads, partitioning and Spark tuning are where I spend a lot of my time. I also like asking one more question before building, because the simplest thing that meets the requirement is usually the right thing to ship.</p>
         </div>
         <dl class="aside">
           <dt class="mono">Based in</dt><dd>Bengaluru, India</dd>
           <dt class="mono">Open to</dt><dd>Relocating to the UAE and internationally</dd>
           <dt class="mono">Languages</dt><dd>Tamil (native), English (professional)</dd>
+          <dt class="mono">Currently learning</dt><dd>Snowflake and dbt</dd>
           <dt class="mono">Interested in</dt><dd>PySpark performance optimisation, lakehouse architectures, cloud data migration, data platforms for analytics and AI</dd>
         </dl>
       </div>
@@ -258,37 +262,37 @@ footer .mono{color:var(--paper);opacity:.6}
 
   <section id="work">
     <div class="wrap">
-      <div class="head"><h2>Selected work</h2><span class="mono">4 projects</span></div>
+      <div class="head"><h2>Selected work</h2><span class="mono">5 projects</span></div>
       <div class="work">
         <article class="card lead">
-          <span class="mono">Banking · Capgemini for Barclays · 2026 to now</span>
+          <span class="mono">Banking · Global investment bank · 2026 to now</span>
           <h3>Moving a bank's middleware onto an AWS-native data platform</h3>
           <p>Part of a cloud migration programme at a global investment bank. I analysed the existing Java middleware end to end, translated its behaviour into technical designs and PySpark transformations, and own the population logic for the core reference and hierarchy tables that feed the enterprise data platform. I verify what lands using Athena SQL on Iceberg tables.</p>
-          <div class="lineage">Java middleware <i>→</i> AWS Glue + PySpark <i>→</i> Apache Iceberg tables <i>→</i> Amazon Athena</div>
+          <div class="lineage"><span>Java middleware</span><i>→</i><span>AWS Glue + PySpark</span><i>→</i><span>Apache Iceberg tables</span><i>→</i><span>Amazon Athena</span></div>
           <ul class="tags"><li>AWS Glue</li><li>PySpark</li><li>Apache Iceberg</li><li>Athena</li><li>Regulated environment</li></ul>
         </article>
 
         <article class="card">
-          <span class="mono">Automotive · KPIT for Schaeffler · 2023 to 2026</span>
+          <span class="mono">Automotive · Global automotive supplier · 2023 to 2026</span>
           <h3>A medallion lakehouse for an online marketing platform</h3>
           <p>Designed and built the architecture end to end. Wrote reusable PySpark frameworks that parse and flatten deeply nested XML and JSON, and the logic that converts guest users into registered users for promotional notifications using first and last login timestamps.</p>
-          <div class="lineage">XML/JSON <i>→</i> S3 Bronze <i>→</i> Glue/EMR <i>→</i> Silver <i>→</i> Gold <i>→</i> Athena, Redshift</div>
+          <div class="lineage"><span>XML/JSON</span><i>→</i><span>S3 Bronze</span><i>→</i><span>Glue/EMR</span><i>→</i><span>Silver</span><i>→</i><span>Gold</span><i>→</i><span>Athena, Redshift</span></div>
           <ul class="tags"><li>S3</li><li>Glue</li><li>EMR</li><li>Redshift</li><li>Airflow</li><li>IAM</li></ul>
         </article>
 
         <article class="card">
-          <span class="mono">Banking · Actalent for Ford GBC · 2022 to 2023</span>
+          <span class="mono">Banking benefits · Global automotive OEM · 2022 to 2023</span>
           <h3>Ab Initio to PySpark for employee banking</h3>
           <p>Migrated legacy Ab Initio graphs (filter, join, sort, de-duplicate, reformat, merge) to PySpark for workflows with around 25 source files, and automated the daily enrolment and monthly performance runs for employee banking benefits.</p>
-          <div class="lineage">Flat files <i>→</i> HDFS <i>→</i> Hive/PySpark <i>→</i> spark-submit on YARN</div>
+          <div class="lineage"><span>Flat files</span><i>→</i><span>HDFS</span><i>→</i><span>Hive/PySpark</span><i>→</i><span>spark-submit on YARN</span></div>
           <ul class="tags"><li>PySpark</li><li>Hive</li><li>HDFS</li><li>YARN</li></ul>
         </article>
 
         <article class="card">
-          <span class="mono">Automotive · Actalent for Ford GBC · 2022 to 2023</span>
+          <span class="mono">Supplier quality · Global automotive OEM · 2022 to 2023</span>
           <h3>Supplier surveillance and qualification tracking</h3>
           <p>Built AWS Glue ETL/ELT pipelines with the Glue Data Catalog for schema management, and opened the data up to business users for ad-hoc SQL in Athena. Ingested relational sources into HDFS and Hive with Sqoop.</p>
-          <div class="lineage">Relational DBs <i>→</i> Sqoop <i>→</i> HDFS/Hive <i>→</i> Glue <i>→</i> Athena</div>
+          <div class="lineage"><span>Relational DBs</span><i>→</i><span>Sqoop</span><i>→</i><span>HDFS/Hive</span><i>→</i><span>Glue</span><i>→</i><span>Athena</span></div>
           <ul class="tags"><li>AWS Glue</li><li>Glue Data Catalog</li><li>Athena</li><li>Sqoop</li></ul>
         </article>
 
@@ -296,7 +300,7 @@ footer .mono{color:var(--paper);opacity:.6}
           <span class="mono">Reporting · Hexaware · 2021 to 2022</span>
           <h3>Faster reports through better SQL</h3>
           <p>Wrote complex queries, joins and stored procedures in MySQL and SQL Server, tuned the slow ones to cut report run times, and kept reporting data accurate through cleansing, validation and de-duplication.</p>
-          <div class="lineage">MySQL, SQL Server <i>→</i> stored procedures <i>→</i> reporting datasets</div>
+          <div class="lineage"><span>MySQL, SQL Server</span><i>→</i><span>stored procedures</span><i>→</i><span>reporting datasets</span></div>
           <ul class="tags"><li>SQL</li><li>MySQL</li><li>SQL Server</li><li>Query tuning</li></ul>
         </article>
       </div>
@@ -311,7 +315,7 @@ footer .mono{color:var(--paper);opacity:.6}
         <div class="when">Aug 2026 – Present<b>Capgemini</b><span class="now">Current</span></div>
         <div>
           <h3>Consultant – Data Engineer</h3>
-          <p class="client">Bengaluru · Client: Barclays, cloud migration programme</p>
+          <p class="client">Bengaluru · Cloud migration programme for a global investment bank</p>
           <ul>
             <li>Re-engineering a legacy Java middleware layer into an AWS-native data platform with AWS Glue, PySpark, Amazon Athena and Apache Iceberg tables, with orchestrated workflows.</li>
             <li>Own the population logic for core reference and hierarchy tables that feed the bank's enterprise data platform.</li>
@@ -325,7 +329,7 @@ footer .mono{color:var(--paper);opacity:.6}
         <div class="when">Sep 2023 – Jun 2026<b>KPIT Technologies</b></div>
         <div>
           <h3>Data Engineer</h3>
-          <p class="client">Bengaluru · Client: Schaeffler, HIL Data online marketing platform</p>
+          <p class="client">Bengaluru · Online marketing platform for a global automotive supplier</p>
           <ul>
             <li>Designed and built a medallion lakehouse from XML/JSON sources through S3 Bronze, Glue/EMR PySpark and Silver to Gold.</li>
             <li>Served Gold data to Athena and Redshift for analytics and to downstream DB2, SQL Server and MySQL systems.</li>
@@ -340,7 +344,7 @@ footer .mono{color:var(--paper);opacity:.6}
         <div class="when">Jan 2022 – Sep 2023<b>Actalent Services</b></div>
         <div>
           <h3>Data Engineer</h3>
-          <p class="client">Client: Ford Global Business Centre</p>
+          <p class="client">Chennai · Assigned to a global automotive OEM's business centre</p>
           <h4>Employee banking remediation and monitoring</h4>
           <ul>
             <li>Migrated legacy Ab Initio ETL graphs to PySpark for workflows with ~25 source files.</li>
@@ -372,7 +376,9 @@ footer .mono{color:var(--paper);opacity:.6}
         <div class="when">Before 2021<b>Early training</b></div>
         <div>
           <h3>Python Intern, Pantech Solutions</h3>
-          <p class="client">Hands-on Python during engineering studies. Also trained as an engineer at All India Radio.</p>
+          <p class="client">Hands-on Python during engineering studies.</p>
+          <h3 style="margin-top:14px">Engineer in Training, All India Radio</h3>
+          <p class="client">Puducherry · Dec 2018 · In-plant training on broadcast equipment and how broadcast communication systems work.</p>
         </div>
       </div>
     </div>
@@ -393,9 +399,30 @@ footer .mono{color:var(--paper);opacity:.6}
     </div>
   </section>
 
+  <section id="writing">
+    <div class="wrap">
+      <div class="head"><h2>Writing</h2><span class="mono">3,000+ followers on LinkedIn</span></div>
+      <div class="work">
+        <article class="card">
+          <span class="mono">PySpark · LinkedIn post</span>
+          <h3>A slow Spark job rarely needs a bigger cluster</h3>
+          <p>Seven things I look for in every code review: leftover count and show calls, Python UDFs where a built-in exists, skewed joins, small tables that should be broadcast, thousands of tiny files, partitioning by the wrong column, and full reloads where an incremental load would do. The habit behind all of them is opening the Spark UI.</p>
+          <ul class="tags"><li>Spark tuning</li><li>AQE</li><li>Broadcast joins</li><li>Incremental loads</li></ul>
+        </article>
+        <article class="card">
+          <span class="mono">Requirements · LinkedIn post</span>
+          <h3>"Real time" usually means "fresher than today"</h3>
+          <p>A stakeholder asked for real-time data. One more question showed they would look at it every Monday morning, so the streaming design became a daily batch job at a fraction of the cost. Ask who uses the data and how often before you build.</p>
+          <ul class="tags"><li>Batch vs streaming</li><li>Requirements</li><li>Cost</li></ul>
+        </article>
+      </div>
+      <p style="margin-top:20px"><a href="https://www.linkedin.com/in/evander-rajaprakash/" target="_blank" rel="noopener">Read my posts on LinkedIn</a></p>
+    </div>
+  </section>
+
   <section id="education">
     <div class="wrap">
-      <div class="head"><h2>Education and recognition</h2></div>
+      <div class="head"><h2>Education and recognition</h2><span class="mono">Degrees, prizes, papers</span></div>
       <div class="edu">
         <div>
           <h3>Education</h3>
@@ -410,6 +437,10 @@ footer .mono{color:var(--paper);opacity:.6}
           <ul>
             <li><div><strong>Tata Crucible Hackathon</strong><br><span>Top 70 finalist</span></div></li>
             <li><div><strong>Distinguished Contributor Certificate</strong><br><span>For coordinating a college symposium</span></div><em>2020</em></li>
+            <li><div><strong>First prize, tech talk</strong><br><span>MITILENCE 2020 national technical symposium, among 300+ participants</span></div><em>2020</em></li>
+            <li><div><strong>Second prize, paper presentation</strong><br><span>Paper on satellite image series, MITILENCE 2020</span></div><em>2020</em></li>
+            <li><div><strong>First prize, CubeSat research paper</strong><br><span>Mailam Engineering College internal symposium</span></div></li>
+            <li><div><strong>Paper on drone-based health care</strong><br><span>Selected for presentation at MVIT, Puducherry</span></div></li>
           </ul>
         </div>
       </div>
@@ -423,7 +454,7 @@ footer .mono{color:var(--paper);opacity:.6}
       <p>I'm open to data engineering roles in Bengaluru, the UAE and internationally. Email is the fastest way to reach me.</p>
       <div class="clist">
         <div><span class="mono">Email</span><a href="mailto:evanderrajaprakash@gmail.com">evanderrajaprakash@gmail.com</a><button class="copy" id="copy-email" type="button">Copy</button></div>
-        <div><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/evanderrajaprakash" target="_blank" rel="noopener">linkedin.com/in/evanderrajaprakash</a></div>
+        <div><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/evander-rajaprakash/" target="_blank" rel="noopener">linkedin.com/in/evander-rajaprakash</a></div>
         <div><span class="mono">Location</span>Bengaluru, India</div>
       </div>
     </div>
@@ -446,6 +477,53 @@ footer .mono{color:var(--paper);opacity:.6}
     try{navigator.clipboard.writeText('evanderrajaprakash@gmail.com').then(function(){done('Copied')},function(){done('Select and copy')})}
     catch(e){done('Select and copy')}
   });
+})();
+</script>
+<script>
+(function(){
+  var c=document.getElementById('flow');if(!c||!c.getContext)return;
+  var g=c.getContext('2d'),W=0,H=0,P=[],col={},last=0,frame=0,acc=0;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var names=['RAW','LANDED','CLEANED','MODELLED','SERVED'];
+  function vars(){var s=getComputedStyle(document.documentElement);['bronze','silver','gold','muted','rule'].forEach(function(k){col[k]=s.getPropertyValue('--'+k).trim()})}
+  function size(){var d=Math.min(window.devicePixelRatio||1,2);W=c.clientWidth;H=c.clientHeight;c.width=W*d;c.height=H*d;g.setTransform(d,0,0,d,0,0)}
+  function spawn(p){return{p:p||0,y0:.2+Math.random()*.7,lane:Math.floor(Math.random()*3),dup:Math.random()<.3,sp:.06+Math.random()*.04,ph:Math.random()*6.28,sq:Math.random()<.5,r:2+Math.random()*2.5}}
+  function ease(k){k=Math.max(0,Math.min(1,k));return k*k*(3-2*k)}
+  function draw(){
+    g.clearRect(0,0,W,H);
+    g.font='10px "IBM Plex Mono",ui-monospace,monospace';g.textBaseline='top';
+    for(var i=0;i<5;i++){
+      if(i){g.fillStyle=col.rule;g.fillRect(Math.round(W*i/5),0,1,H)}
+      g.fillStyle=col.muted;g.fillText(names[i],W*i/5+10,9);
+    }
+    for(var j=0;j<P.length;j++){
+      var q=P[j],p=q.p,lane=.3+q.lane*.22,y,a=.9,r=q.r;
+      if(p<.4)y=q.y0+Math.sin(q.ph+p*40)*.05*(1-p/.4);
+      else if(p<.6)y=q.y0+(lane-q.y0)*ease((p-.4)/.2);
+      else y=lane+(.52+(q.lane-1)*.07-lane)*ease((p-.6)/.2);
+      if(q.dup)a=.9*(1-ease((p-.42)/.1));
+      if(a<=0)continue;
+      if(p>.5)r=2.6+1.2*ease((p-.6)/.2);
+      g.globalAlpha=a;
+      g.fillStyle=p<.2?col.muted:p<.4?col.bronze:p<.6?col.silver:col.gold;
+      var X=p*W,Y=22+y*(H-30);
+      if(q.sq&&p<.45)g.fillRect(X-r,Y-r,r*2,r*2);
+      else{g.beginPath();g.arc(X,Y,r,0,6.2832);g.fill()}
+    }
+    g.globalAlpha=1;
+  }
+  function tick(t){
+    var dt=Math.min((t-last)/1000||0,.05);last=t;
+    if(frame++%60===0)vars();
+    acc+=dt*9;while(acc>1&&P.length<160){P.push(spawn(0));acc-=1}
+    for(var i=P.length-1;i>=0;i--){P[i].p+=P[i].sp*dt;if(P[i].p>1.02)P.splice(i,1)}
+    draw();requestAnimationFrame(tick);
+  }
+  vars();size();
+  for(var i=0;i<110;i++)P.push(spawn(Math.random()));
+  draw();
+  window.addEventListener('resize',function(){size();draw()});
+  if(!reduce)requestAnimationFrame(tick);
 })();
 </script>
 </body>
